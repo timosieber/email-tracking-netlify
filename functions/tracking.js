@@ -29,7 +29,8 @@ exports.handler = async (event, context) => {
 
   try {
     // Anfrage an Google Analytics senden
-    await axios.post(postUrl, postData);
+    const response = await axios.post(postUrl, postData);
+    console.log("Google Analytics Response: ", response.data);
 
     // Tracking erfolgreich -> Sende das transparente Pixel-Bild zurück
     const pixelPath = path.join(__dirname, '../images/transparent_pixel.png');
@@ -44,10 +45,11 @@ exports.handler = async (event, context) => {
       isBase64Encoded: true
     };
   } catch (error) {
-    console.error('Fehler beim Tracking:', error);
+    console.error('Fehler beim Tracking:', error.message);  // Detaillierte Fehlermeldung ausgeben
+    console.error('Fehler Stacktrace:', error.stack);        // Stacktrace für mehr Details
     return {
       statusCode: 500,
-      body: 'Fehler beim Tracking'
+      body: 'Fehler beim Tracking: ' + error.message
     };
   }
 };
