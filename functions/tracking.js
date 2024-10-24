@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
     await axios.post(postUrl, postData);
 
     // Webhook URL zu deinem Google Apps Script (für die Status-Aktualisierung)
-    const webhookUrl = `https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec?client_id=${clientId}`;
+    const webhookUrl = `https://script.google.com/macros/s/AKfycbynMFFW_LKz3TDbdnBAD12at4lphhuiVeUTJkyXhh-F_iALqN_qu5_lE-j8-xGhc2uA/exec?client_id=${clientId}`;
 
     // Webhook ausführen, um den Status im Sheet zu aktualisieren
     await axios.get(webhookUrl);
