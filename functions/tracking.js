@@ -33,7 +33,7 @@ exports.handler = async (event, context) => {
     console.log("Google Analytics Response: ", response.data);
 
     // Tracking erfolgreich -> Sende das transparente Pixel-Bild zurück
-    const pixelPath = path.join(__dirname, '../images/transparent_pixel.png');
+    const pixelPath = path.join(__dirname, 'transparent_pixel.png');
     const pixelBuffer = fs.readFileSync(pixelPath);
 
     return {
