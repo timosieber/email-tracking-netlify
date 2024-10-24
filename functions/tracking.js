@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // URL für Google Analytics (mit deiner Measurement-ID und API-Schlüssel)
+  // Google Analytics URL für das Tracking Event
   const postUrl = `https://www.google-analytics.com/mp/collect?measurement_id=G-EVX82XD4NH&api_secret=FVa3v2tYRWei_RLhQLFAmw`;
 
   const postData = {
@@ -19,6 +19,7 @@ exports.handler = async (event, context) => {
       {
         "name": "email_open",
         "params": {
+          "client_id": clientId, // Die Referenznummer wird als client_id an GA gesendet
           "engagement": "open"
         }
       }
@@ -27,8 +28,13 @@ exports.handler = async (event, context) => {
 
   try {
     // Anfrage an Google Analytics senden
-    const response = await axios.post(postUrl, postData);
-    console.log("Google Analytics Response: ", response.data);
+    await axios.post(postUrl, postData);
+
+    // Webhook URL zu deinem Google Apps Script (für die Status-Aktualisierung)
+    const webhookUrl = `https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec?client_id=${clientId}`;
+
+    // Webhook ausführen, um den Status im Sheet zu aktualisieren
+    await axios.get(webhookUrl);
 
     // Base64-String für das transparente 1x1 Bild (PNG)
     const transparentPixelBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBAp8xXAAA'
