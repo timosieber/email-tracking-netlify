@@ -1,6 +1,4 @@
 const axios = require('axios');
-const path = require('path');
-const fs = require('fs');
 
 exports.handler = async (event, context) => {
   const clientId = event.queryStringParameters.client_id;
@@ -32,16 +30,16 @@ exports.handler = async (event, context) => {
     const response = await axios.post(postUrl, postData);
     console.log("Google Analytics Response: ", response.data);
 
-    // Lade das transparente 1x1 Pixel-Bild aus dem gleichen Ordner wie tracking.js
-    const pixelPath = path.join(__dirname, 'transparent_pixel.png');
-    const pixelBuffer = fs.readFileSync(pixelPath);
+    // Base64-String für das transparente 1x1 Bild (PNG)
+    const transparentPixelBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBAp8xXAAA'
+                                 + 'AAAASUVORK5CYII=';
 
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'image/png'
       },
-      body: pixelBuffer.toString('base64'),
+      body: transparentPixelBase64,
       isBase64Encoded: true
     };
   } catch (error) {
