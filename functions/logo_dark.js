@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');  // Stellt sicher, dass axios installiert ist
+const axios = require('axios');  // Sicherstellen, dass axios installiert ist
 
 exports.handler = async (event) => {
   const clientId = event.queryStringParameters.client_id;
@@ -13,20 +13,21 @@ exports.handler = async (event) => {
   }
 
   // Google Analytics Measurement ID und API Secret
-  const measurementId = 'G-EVX82XD4NH';  // Deine Measurement ID
-  const apiSecret = 'FVa3v2tYRWei_RLhQLFAmw';  // Dein API-Geheimnis
+  const measurementId = 'G-EVX82XD4NH';  // Ersetzen mit deiner Measurement ID
+  const apiSecret = 'FVa3v2tYRWei_RLhQLFAmw';  // Ersetzen mit deinem API-Geheimnis
 
   // URL für Google Analytics
   const gaUrl = `https://www.google-analytics.com/mp/collect?measurement_id=${measurementId}&api_secret=${apiSecret}`;
 
-  // Daten für das Google Analytics-Event
+  // Daten für das Google Analytics-Event mit `client_id` als benutzerdefiniertem Parameter
   const gaData = {
     client_id: clientId,
     events: [
       {
         name: 'email_open',
         params: {
-          engagement: 'open'
+          engagement: 'open',
+          user_client_id: clientId  // client_id als benutzerdefinierten Parameter hinzufügen
         }
       }
     ]
