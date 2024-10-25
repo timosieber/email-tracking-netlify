@@ -1,7 +1,13 @@
 [build]
-functions = "functions"  # Verzeichnis, in dem die Funktionen gespeichert sind
+  functions = "functions"  # Verzeichnis, in dem die Funktionen gespeichert sind
 
 [[redirects]]
   from = "/.netlify/functions/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+[[plugins]]
+  package = "@netlify/plugin-functions-included-files"
+
+[[functions]]
+  included_files = ["functions/logo_dark.png", "functions/logo_light.png"]
